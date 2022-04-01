@@ -19,7 +19,7 @@ repository = "https://github.com/FLC-Data/correios-scrapy"
   flake8 = "^4.0.1"
 
   [tool.poetry.scripts]
-  jira-issue = "modules.jira.issue:cli"
+  jira-issue-script = "modules.jira.issue:cli"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

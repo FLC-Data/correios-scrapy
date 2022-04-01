@@ -84,4 +84,4 @@ jobs:
         uses: riskledger/update-pr-description@v2
         with:
           body: "${{ steps.jira.outputs.issue }}"
-          token: ${{ secrets.API_GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}

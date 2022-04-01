@@ -35,3 +35,53 @@ jobs:
       - name: Linter
         run: poetry run flake8
 
+
+  # Update Pull Request Description with the Jira Issue Description.
+  jira-issue-pull-request:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8.5
+
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          virtualenvs-in-project: true
+
+      - name: Load Cached Venv
+        id: cached-poetry-dependencies
+        uses: actions/cache@v2
+        with:
+          path: .venv
+          key: venv-${{ hashFiles('**/poetry.lock') }}
+
+      - name: Install Dependencies
+        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        run: poetry install --no-interaction
+
+      - name: Get Current Branch
+        uses: bvkimball/branch-vars@1.0.1
+
+      - name: Wrangling Branch Name
+        id: branch
+        run:  echo "::set-output name=branch_issue::$(echo ${CURRENT_BRANCH} | grep -o -E '[A-Z0-9\-]+')"
+
+      - name: Jira
+        id: jira
+        run: |
+          output=$(poetry run jira-issue-script ${{ steps.branch.outputs.branch_issue }} ${{ secrets.FLC_JIRA_TOKEN }} ${{ secrets.FLC_JIRA_EMAIL }})
+          output="${output//'%'/'%25'}"
+          output="${output//$'\n'/'%0A'}"
+          output="${output//$'\r'/'%0D'}"
+          echo "::set-output name=issue::$output"
+
+      - name: Update Pull Request Description
+        uses: riskledger/update-pr-description@v2
+        with:
+          body: "${{ steps.jira.outputs.issue }}"
+          token: ${{ secrets.GITHUB_TOKEN }}

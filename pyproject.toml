@@ -3,14 +3,23 @@ name = "correios-scrapy"
 version = "0.1.0"
 description = ""
 authors = ["FabioCaffarello <fabio.caffarello@gmail.com>"]
+repository = "https://github.com/FLC-Data/correios-scrapy"
 
-[tool.poetry.dependencies]
-python = "^3.8"
-Scrapy = "^2.6.1"
-pre-commit = "^2.17.0"
+  packages = [
+    { include = "modules" }
+  ]
 
-[tool.poetry.dev-dependencies]
-flake8 = "^4.0.1"
+  [tool.poetry.dependencies]
+  python = "^3.8"
+  Scrapy = "^2.6.1"
+  pre-commit = "^2.17.0"
+  requests = "^2.27.1"
+
+  [tool.poetry.dev-dependencies]
+  flake8 = "^4.0.1"
+
+  [tool.poetry.scripts]
+  jira-issue-script = "modules.jira.issue:cli"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

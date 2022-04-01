@@ -7,7 +7,7 @@ import requests
 from requests.auth import HTTPBasicAuth
 
 
-domain = 'tradersclub'
+domain = 'flcdata'
 jira_domain = f'https://{domain}.atlassian.net'
 
 

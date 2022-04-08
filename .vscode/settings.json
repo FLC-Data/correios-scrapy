@@ -12,7 +12,7 @@
         "**/CSV": true,
         "**/.DS_Store": true,
         "**/.pytest_cache": true,
-        "**/__pycache__": false
+        "**/__pycache__": true
     },
     "python.linting.flake8Enabled": true,
     "python.linting.enabled": true,

@@ -14,7 +14,7 @@ class DeleteOutputPipeline:
 
     def open_spider(self, spider):
         try:
-            os.remove("output.jsonl")
+            os.remove("../data/output.jsonl")
         except OSError as e:
             pass
 

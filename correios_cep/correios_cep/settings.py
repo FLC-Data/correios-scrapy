@@ -7,6 +7,19 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
+FEED = {
+        './output.jsonl': {
+            'format': 'jsonlines',
+            'encoding': 'utf8',
+            'overwrite': 'True'
+            },
+        }
+FEED_URI = "output.jsonl"
+FEED_FORMAT = 'jsonlines'
+FEED_EXPORT_ENCODING: 'UTF-8'
+FEED_OVERWRITE = 'True'
+
+
 BOT_NAME = 'correios_cep'
 
 SPIDER_MODULES = ['correios_cep.spiders']
@@ -62,9 +75,10 @@ ROBOTSTXT_OBEY = True
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-# ITEM_PIPELINES = {
-#    'correios_cep.pipelines.CorreiosCepPipeline': 300,
-# }
+ITEM_PIPELINES = {
+    'correios_cep.pipelines.DeleteOutputPipeline': 1200,
+    'correios_cep.pipelines.DuplicatesPipeline': 900
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html

@@ -50,4 +50,36 @@ class CorreiosSpider(scrapy.Spider):
                         items.add_fields(array_fields)
                         yield items.load_item()
             else:
-                pass
+                start = str(page*100 + 1)
+                end = str((page + 1)*100)
+                formdata = {
+                    'UF': uf,
+                    'qtdrow': '100',
+                    'pagini': start,
+                    'pagfim': end
+                }
+                cb_kwargs = {
+                    'uf': uf
+                }
+                yield scrapy.FormRequest.from_response(
+                    response,
+                    formdata=formdata,
+                    cb_kwargs=cb_kwargs,
+                    callback=self.parse_content_pagination
+                )
+
+    def parse_content_pagination(self, response, uf):
+        for row in response.xpath('//table[@class="tmptabela"][last()]//tr'):
+            items = CorreiosLoader(CorreiosItem())
+            array_fields = [
+                uf,
+                row.xpath('td[1]//text()').get(),
+                row.xpath('td[2]//text()').get(),
+                row.xpath('td[3]//text()').get(),
+                row.xpath('td[4]//text()').get()
+            ]
+            array_fields = ['' if not field else field.strip() for field in array_fields]
+            row_valid = True if len(list(filter(lambda x: x != '', array_fields))) > 1 else False
+            if row_valid:
+                items.add_fields(array_fields)
+                yield items.load_item()

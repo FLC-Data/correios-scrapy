@@ -30,5 +30,14 @@ class CorreiosSpider(scrapy.Spider):
             )
 
     def parse_content(self, response, uf):
-        print(uf)
-        pass
+        last_row = response.xpath('//div[@class="ctrlcontent"]/text()').re(r"\r\xa0\xa01 a 100 de (\d*)")
+        last_row = 1 if not last_row else int(last_row[0])//100 + 1
+
+        for page in range(1, last_row+1):
+            if page == 1:
+                for row in response.xpath('//table[@class="tmptabela"][last()]//tr'):
+                    # Precisa Criar o item e o itemLoader >> TASK 8
+                    print('row')
+                pass
+            else:
+                pass

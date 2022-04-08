@@ -3,13 +3,18 @@
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/items.html
 import hashlib
+import unicodedata
 
 import scrapy
+from scrapy.loader import ItemLoader
 from itemloaders.processors import TakeFirst
-from utils import normalize
 
 
-class CorreiosLoader(scrapy.ItemLoader):
+def normalize(string):
+    return unicodedata.normalize('NFD', string).encode('ascii', 'ignore').decode("utf-8")
+
+
+class CorreiosLoader(ItemLoader):
     default_output_processor = TakeFirst()
 
     def add_fields(self, fields):

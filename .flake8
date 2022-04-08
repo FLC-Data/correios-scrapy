@@ -9,6 +9,7 @@ exclude =
 	.venv,
 	.pytest_cache,
   middlewares.py,
-  pipelines.py
+  pipelines.py,
+  settings.py
 
 max-line-length = 120

@@ -8,8 +8,7 @@ exclude =
 	venv,
 	.venv,
 	.pytest_cache,
-    ml_app/app/__init__.py,
-    ml_app/app/*/__init__.py,
-    ml_app/app.py,
-    migrations/*
+  middlewares.py,
+  pipelines.py
+
 max-line-length = 120

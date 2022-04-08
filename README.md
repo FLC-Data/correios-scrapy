@@ -25,7 +25,7 @@ git config --global http.sslverify "false" && \
 poetry run pre-commit install
 ```
 
-- Padronização de branches de desenvolvimento: release, feature, bugfix, hotfix
+- Padronização de branches de desenvolvimento: release/v{VERSION}, feature/{ISSUE JIRA}, bugfix/{ISSUE JIRA}, hotfix/{ISSUE JIRA}
 
 ## Existe um auto setup para facilitar no setup do ambiente de desenvolvimento
 

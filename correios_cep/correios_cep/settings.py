@@ -78,7 +78,6 @@ ROBOTSTXT_OBEY = True
 ITEM_PIPELINES = {
     'correios_cep.pipelines.DeleteOutputPipeline': 1200,
     'correios_cep.pipelines.DuplicatesPipeline': 900
-    # 'correios_cep.pipelines.MoveOutputPipeline': 100
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

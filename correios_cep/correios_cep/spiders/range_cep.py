@@ -1,5 +1,5 @@
 import scrapy
-# from correios.items import CorreiosLoader, CorreiosItem
+from correios_cep.items import CorreiosLoader, CorreiosItem
 
 
 class CorreiosSpider(scrapy.Spider):
@@ -36,8 +36,18 @@ class CorreiosSpider(scrapy.Spider):
         for page in range(1, last_row+1):
             if page == 1:
                 for row in response.xpath('//table[@class="tmptabela"][last()]//tr'):
-                    # Precisa Criar o item e o itemLoader >> TASK 8
-                    print('row')
-                pass
+                    items = CorreiosLoader(CorreiosItem())
+                    array_fields = [
+                        uf,
+                        row.xpath('td[1]//text()').get(),
+                        row.xpath('td[2]//text()').get(),
+                        row.xpath('td[3]//text()').get(),
+                        row.xpath('td[4]//text()').get()
+                    ]
+                    array_fields = ['' if not field else field.strip() for field in array_fields]
+                    row_valid = True if len(list(filter(lambda x: x != '', array_fields))) > 1 else False
+                    if row_valid:
+                        items.add_fields(array_fields)
+                        yield items.load_item()
             else:
                 pass

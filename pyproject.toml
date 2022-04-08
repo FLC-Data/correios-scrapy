@@ -14,6 +14,7 @@ repository = "https://github.com/FLC-Data/correios-scrapy"
   Scrapy = "^2.6.1"
   pre-commit = "^2.17.0"
   requests = "^2.27.1"
+  beautifulsoup4 = "^4.10.0"
 
   [tool.poetry.dev-dependencies]
   flake8 = "^4.0.1"

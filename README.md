@@ -21,7 +21,8 @@ poetry env use python
 ### Instalando pre-commit
 
 ```shell
-pre-commit install
+git config --global http.sslverify "false" && \
+poetry run pre-commit install
 ```
 
 - Padronização de branches de desenvolvimento: release, feature, bugfix, hotfix
